@@ -5,21 +5,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CategoryFragment#newInstance} factory method to
+ * Use the {@link DetailCategoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoryFragment extends Fragment {
-    public static final String EXTRA_NAME = "extra_name";
-    public static final String EXTRA_STOCK = "extra_stock";
+public class DetailCategoryFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +27,7 @@ public class CategoryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CategoryFragment() {
+    public DetailCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +37,11 @@ public class CategoryFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoryFragment.
+     * @return A new instance of fragment DetailCategoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CategoryFragment newInstance(String param1, String param2) {
-        CategoryFragment fragment = new CategoryFragment();
+    public static DetailCategoryFragment newInstance(String param1, String param2) {
+        DetailCategoryFragment fragment = new DetailCategoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,22 +62,20 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+        return inflater.inflate(R.layout.fragment_detail_category, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button btnCategoryLifestyle = view.findViewById(R.id.btn_category_lifestyle);
-        btnCategoryLifestyle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CategoryFragmentDirections.ActionCategoryFragmentToDetailCategoryFragment toDetailCategoryFragment = CategoryFragmentDirections.actionCategoryFragmentToDetailCategoryFragment();
-                toDetailCategoryFragment.setName("New Lifestyle");
-                toDetailCategoryFragment.setStock(100);
-                Navigation.findNavController(view).navigate(toDetailCategoryFragment);
-            }
-        });
+        TextView tvCategoryName = view.findViewById(R.id.tv_category_name);
+        TextView tvCategoryDescription = view.findViewById(R.id.tv_category_description);
+
+        String dataName = DetailCategoryFragmentArgs.fromBundle(getArguments()).getName();
+        long dataDescription = DetailCategoryFragmentArgs.fromBundle(getArguments()).getStock();
+
+        tvCategoryName.setText(dataName);
+        tvCategoryDescription.setText("Stock: "+dataDescription);
     }
 }
